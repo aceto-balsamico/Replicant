@@ -12,8 +12,9 @@ int userfunc(int argc, char *argv[])
 
 #ifdef FOOK2
 int userfunc(int argc, char *argv[])
-{
+{   
     printf("Fook2 User Function Called with %d arguments:\n", argc);
+    printf("Global variable value: %d\n", global_var);
 
     CALL_ORIG_FUNC(userfunc, int, -1, int, char**);
     return orig_userfunc(argc, argv);

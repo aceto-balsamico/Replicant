@@ -1,4 +1,3 @@
 #include "common.h"
 
-int userfunc(int argc, char *argv[]);
-
+extern int global_var;

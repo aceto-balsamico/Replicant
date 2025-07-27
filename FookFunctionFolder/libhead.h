@@ -1,7 +1,7 @@
 #ifndef LIBHEAD_H
 #define LIBHEAD_H
 
-#include <stdio.h>
+#include "userfunc.h"
 #include <dlfcn.h>
 #define _GNU_SOURCE
 

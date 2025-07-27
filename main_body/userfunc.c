@@ -2,6 +2,10 @@
 
 #define STR(x) #x
 
+
+
+int global_var = 42; // Example global variable
+
 int userfunc(int argc, char *argv[])
 {
     // for(int i = 0; i < argc; i++)
