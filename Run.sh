@@ -6,7 +6,7 @@ DIR="bin"
 flag_fook=false
 arguments=()
 
-
+# 引数に-fが含まれているかチェック
 for arg in "$@"; do
     if [ "$arg" == "-f" ]; then
         flag_fook=true
@@ -15,6 +15,7 @@ for arg in "$@"; do
     fi
 done
 
+# プログラムの実行
 if [ "$flag_fook" == true ]; then
     if [ ! -f "$DIR/$FOOK_LIB" ]; then
         echo "Fook library not found: $DIR/$FOOK_LIB"

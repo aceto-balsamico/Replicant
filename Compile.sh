@@ -3,6 +3,7 @@
 arguments=()
 flag_f=false
 flag_success=false
+FOOK_OBJ_FILE="obj/FookFunctionFolder/*"
 
 # エラーメッセージを表示する関数
 fail_finish()
@@ -44,6 +45,7 @@ if [ "$flag_f" = true ]; then
     if [[ "${arguments[*]}" != *-D* ]]; then
         echo "MACRO is not found"
     fi
+    rm $FOOK_OBJ_FILE
     make lib SHELL_ARGS="${arguments[*]}"
     fail_finish
 else
