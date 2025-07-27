@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# シェルの引数を格納
 arguments=()
-for arg in "$@"; do
-    arguments+=("$arg")
-done
-
+flag_f=false
 flag_success=false
 
+# エラーメッセージを表示する関数
 fail_finish()
 {
     if [ $? -ne 0 ]; then
@@ -18,30 +15,43 @@ fail_finish()
 
     if [ "$flag_success" = false ]; then
         echo -e "\033[31m"
-        echo "make failed."
+        echo "Make Failed."
         echo -e "\033[0m"
         exit 1
     else
-        echo -e "\033[32mmake succeeded."
+        echo -e "\033[32mMake Succeeded."
         echo -e "\033[0m"
     fi
 }
 
-if [ ${#arguments[@]} -eq 0 ]; then
-    make
-    fail_finish
+# 引数に-fが含まれているかチェック
+for arg in "$@"; do
+    if [ "$arg" = "-f" ]; then
+        flag_f=true
+    else
+        arguments+=("$arg")
+    fi
+done
 
-    make lib
+# 引数が空ではなかったら、引数を表示
+if [ "${arguments[*]}" != "" ]; then
+    echo "Compiling with arguments: ${arguments[*]}"
+fi
+
+# 実行ファイルか動的ライブラリをビルド
+if [ "$flag_f" = true ]; then
+    echo -e "\033[33mBuilding Dynamic Library\033[0m"
+    if [[ "${arguments[*]}" != *-D* ]]; then
+        echo "MACRO is not found"
+    fi
+    make lib SHELL_ARGS="${arguments[*]}"
     fail_finish
 else
-    echo "Compiling with arguments: ${arguments[@]}"
-    make SHELL_ARGS="${arguments[@]}"
-    fail_finish
-
-    make lib
+    echo -e "\033[33mBuilding Executable File\033[0m"
+    make SHELL_ARGS="${arguments[*]}"
     fail_finish
 fi
 
-echo -e "\033[34mAll Compilation succeeded."
+echo -e "\033[34mAll Compilation Succeeded."
 echo -e "\033[0m"
 

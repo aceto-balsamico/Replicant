@@ -16,6 +16,10 @@ for arg in "$@"; do
 done
 
 if [ "$flag_fook" == true ]; then
+    if [ ! -f "$DIR/$FOOK_LIB" ]; then
+        echo "Fook library not found: $DIR/$FOOK_LIB"
+        exit 1
+    fi
     LD_PRELOAD="$DIR/$FOOK_LIB" "$DIR/$TARGET_EXE" "${arguments[@]}"
 else
     "$DIR/$TARGET_EXE" "${arguments[@]}"

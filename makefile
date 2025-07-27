@@ -72,38 +72,41 @@ lib: $(USERLIB_SO)
 
 # 実行ファイル作成 (オブジェクトファイルとMAIN_BODY.SOのリンク。USERLIB_SOはリンクしない)
 $(TARGET): $(ALL_OBJS) $(MAIN_BODY_SO) | $(BIN_DIR)
+	@echo "\033[34mExecutable Linking...\033[0m"
 	g++ -o $@ $(ALL_OBJS) $(MAIN_BODY_SO) $(LDFLAGS)
 
 # MainBody.so 動的ライブラリ作成(リンク)
 $(MAIN_BODY_SO): $(MAIN_BODY_C_OBJS) $(MAIN_BODY_CPP_OBJS) | $(BIN_DIR)
+	@echo "\033[34mShared Object Creation...\033[0m"
 	g++ -o $@ $(MAIN_BODY_C_OBJS) $(MAIN_BODY_CPP_OBJS) $(SOFLAGS)
 # Userlib.so 動的ライブラリ作成(リンク)
 $(USERLIB_SO): $(USERLIB_C_OBJS) $(USERLIB_CPP_OBJS) | $(BIN_DIR)
+	@echo "\033[34mShared Object Creation...\033[0m"
 	g++ -o $@ $(USERLIB_C_OBJS) $(USERLIB_CPP_OBJS) $(SOFLAGS)
 
 # srcディレクトリのCファイルコンパイル
 $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(SRC_OBJ_DIR)
-	$(SRC_CC) $(COMMON_CFLAGS) $(SRC_CFLAGS) -c $< -o $@
+	$(SRC_CC) $(SRC_CFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # srcディレクトリのC++ファイルコンパイル
 $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(SRC_OBJ_DIR)
-	$(SRC_CXX) $(COMMON_CFLAGS) $(SRC_CXXFLAGS) -c $< -o $@
+	$(SRC_CXX) $(SRC_CXXFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # main_bodyディレクトリのCファイルコンパイル
 $(MAIN_BODY_OBJ_DIR)/%.o: $(MAIN_BODY_DIR)/%.c | $(MAIN_BODY_OBJ_DIR)
-	$(MAIN_BODY_CC) $(COMMON_CFLAGS) $(MAIN_BODY_CFLAGS) -c $< -o $@
+	$(MAIN_BODY_CC) $(MAIN_BODY_CFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # main_bodyディレクトリのC++ファイルコンパイル
 $(MAIN_BODY_OBJ_DIR)/%.o: $(MAIN_BODY_DIR)/%.cpp | $(MAIN_BODY_OBJ_DIR)
-	$(MAIN_BODY_CXX) $(COMMON_CFLAGS) $(MAIN_BODY_CXXFLAGS) -c $< -o $@
+	$(MAIN_BODY_CXX) $(MAIN_BODY_CXXFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # userlibディレクトリのCファイルコンパイル
 $(USERLIB_OBJ_DIR)/%.o: $(USERLIB_DIR)/%.c | $(USERLIB_OBJ_DIR)
-	$(USERLIB_CC) $(COMMON_CFLAGS) $(USERLIB_CFLAGS) -c $< -o $@
+	$(USERLIB_CC) $(USERLIB_CFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # userlibディレクトリのC++ファイルコンパイル
 $(USERLIB_OBJ_DIR)/%.o: $(USERLIB_DIR)/%.cpp | $(USERLIB_OBJ_DIR)
-	$(USERLIB_CXX) $(COMMON_CFLAGS) $(USERLIB_CXXFLAGS) -c $< -o $@
+	$(USERLIB_CXX) $(USERLIB_CXXFLAGS) $(COMMON_CFLAGS) -c $< -o $@
 
 # ディレクトリ作成
 $(OBJ_DIR):
