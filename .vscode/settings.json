@@ -10,7 +10,8 @@
     "C_Cpp.clang_format_path": "clang-format",
     "files.associations": {
         "libhead.h": "c",
-        "common.h": "c"
-    } // 必要ならパス指定
+        "common.h": "c",
+        "userfunc.h": "c"
+    }, // 必要ならパス指定
 
 }
