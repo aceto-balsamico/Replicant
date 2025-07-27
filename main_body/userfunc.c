@@ -10,20 +10,9 @@ int userfunc(int argc, char *argv[])
     // }
     printf("Hello from userfunc! Called with %d arguments.\n", argc);
 
-    printf("%s\n", STR(0xAA)); // → "hello"
-
-    int aaa = 1;
-    if (aaa)
-    {
-        printf("hello,%d,%d,%d", 123, 123, 123);
-    }
-    char *str = "hello";
+    printf("%s\n", STR(0xAA)); // → "hello" 
+    printf("hello");
 
     return EXIT_SUCCESS;  
-
-
-
-
-
     
 }

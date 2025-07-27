@@ -16,29 +16,30 @@ MAIN_BODY_OBJ_DIR 	= $(OBJ_DIR)/$(MAIN_BODY_DIR)
 USERLIB_OBJ_DIR 	= $(OBJ_DIR)/$(USERLIB_DIR)
 
 # コンパイラとフラグ設定
-# 共通フラグ
+# 共通コンパイルフラグ
 COMMON_CFLAGS 		= -I$(SRC_DIR) -I$(MAIN_BODY_DIR) -I$(USERLIB_DIR) $(SHELL_ARGS)
 
 # srcディレクトリ用
 SRC_CC 				= gcc
 SRC_CXX 			= g++
 SRC_CFLAGS 			= -O0 -Wall
-SRC_CXXFLAGS 		= -O0 -Wall -lpthread -lm
+SRC_CXXFLAGS 		= -O0 -Wall
 
 # main_bodyディレクトリ用
 MAIN_BODY_CC 		= gcc
 MAIN_BODY_CXX 		= g++
-MAIN_BODY_CFLAGS 	= -O3 -shared -fPIC -ldl
-MAIN_BODY_CXXFLAGS 	= -O3 -shared -fPIC -ldl
+MAIN_BODY_CFLAGS 	= -Wall -O3 -fPIC
+MAIN_BODY_CXXFLAGS 	= -Wall -O3 -fPIC
 
 # userlibディレクトリ用
 USERLIB_CC 			= gcc
 USERLIB_CXX 		= g++
-USERLIB_CFLAGS 		= -O3 -Wall -shared -fPIC -ldl
-USERLIB_CXXFLAGS 	= -O3 -Wall -shared -fPIC -ldl
+USERLIB_CFLAGS 		= -Wall -O3 -fPIC
+USERLIB_CXXFLAGS 	= -Wall -O3 -fPIC
 
 # リンカフラグ
 LDFLAGS = -lpthread -lm -ldl
+SOFLAGS = -shared $(LDFLAGS)
 
 # ソースファイル検索
 SRC_C_FILES 			= $(wildcard $(SRC_DIR)/*.c)
@@ -69,16 +70,16 @@ all: $(TARGET)
 
 lib: $(USERLIB_SO)
 
-# 実行ファイル作成 (USERLIB_SOはリンクしない)
+# 実行ファイル作成 (オブジェクトファイルとMAIN_BODY.SOのリンク。USERLIB_SOはリンクしない)
 $(TARGET): $(ALL_OBJS) $(MAIN_BODY_SO) | $(BIN_DIR)
 	g++ -o $@ $(ALL_OBJS) $(MAIN_BODY_SO) $(LDFLAGS)
 
-# 動的ライブラリ作成
+# MainBody.so 動的ライブラリ作成(リンク)
 $(MAIN_BODY_SO): $(MAIN_BODY_C_OBJS) $(MAIN_BODY_CPP_OBJS) | $(BIN_DIR)
-	g++ -shared -o $@ $(MAIN_BODY_C_OBJS) $(MAIN_BODY_CPP_OBJS) $(LDFLAGS)
-
+	g++ -o $@ $(MAIN_BODY_C_OBJS) $(MAIN_BODY_CPP_OBJS) $(SOFLAGS)
+# Userlib.so 動的ライブラリ作成(リンク)
 $(USERLIB_SO): $(USERLIB_C_OBJS) $(USERLIB_CPP_OBJS) | $(BIN_DIR)
-	g++ -shared -o $@ $(USERLIB_C_OBJS) $(USERLIB_CPP_OBJS) $(LDFLAGS)
+	g++ -o $@ $(USERLIB_C_OBJS) $(USERLIB_CPP_OBJS) $(SOFLAGS)
 
 # srcディレクトリのCファイルコンパイル
 $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(SRC_OBJ_DIR)
@@ -106,19 +107,19 @@ $(USERLIB_OBJ_DIR)/%.o: $(USERLIB_DIR)/%.cpp | $(USERLIB_OBJ_DIR)
 
 # ディレクトリ作成
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR) > /dev/null 2>&1
 
 $(SRC_OBJ_DIR): | $(OBJ_DIR)
-	mkdir -p $(SRC_OBJ_DIR)
+	@mkdir -p $(SRC_OBJ_DIR) > /dev/null 2>&1
 
 $(MAIN_BODY_OBJ_DIR): | $(OBJ_DIR)
-	mkdir -p $(MAIN_BODY_OBJ_DIR)
+	@mkdir -p $(MAIN_BODY_OBJ_DIR) > /dev/null 2>&1
 
 $(USERLIB_OBJ_DIR): | $(OBJ_DIR)
-	mkdir -p $(USERLIB_OBJ_DIR)
+	@mkdir -p $(USERLIB_OBJ_DIR) > /dev/null 2>&1
 
 $(BIN_DIR):
-	mkdir -p $(BIN_DIR)
+	@mkdir -p $(BIN_DIR) > /dev/null 2>&1
 
 # クリーンアップ
 clean:
