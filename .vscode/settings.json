@@ -1,0 +1,12 @@
+{
+    "terminal.integrated.profiles.linux": {
+        "bash (Replicant)": {
+            "path": "bash",
+            "args": ["--rcfile", "${workspaceFolder}/.vscode/bashrc"]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "bash (Replicant)",
+    "C_Cpp.clang_format_style": "file",
+    "C_Cpp.clang_format_path": "clang-format" // 必要ならパス指定
+
+}

@@ -1,3 +1,9 @@
+
+# Other files
+.clang-format
+bashrc
+bin/*
+
 # Prerequisites
 *.d
 
