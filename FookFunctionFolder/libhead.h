@@ -15,11 +15,11 @@
  */
 // 
 #define CALL_ORIGINAL_FUNC(funcname, rettype, errval, ...)                          \
-    static rettype (*ptr_##funcname)(__VA_ARGS__) = NULL;                        \
-    if (!ptr_##funcname)                                                         \
+    static rettype (*ptr_##funcname)(__VA_ARGS__) = NULL;                           \
+    if (!ptr_##funcname)                                                            \
     {                                                                               \
-        ptr_##funcname = (rettype (*)(__VA_ARGS__))dlsym(RTLD_NEXT, #funcname);  \
-        if (!ptr_##funcname)                                                     \
+        ptr_##funcname = (rettype (*)(__VA_ARGS__))dlsym(RTLD_NEXT, #funcname);     \
+        if (!ptr_##funcname)                                                        \
         {                                                                           \
             fprintf(stderr, "original function %s not found!\n", #funcname);        \
             return errval;                                                          \
