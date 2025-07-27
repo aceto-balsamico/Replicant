@@ -1,1 +1,19 @@
 # Replicant
+
+# GDB使用時の注意
+関数のフックを行うプログラムにおいてgdbでバイナリ解析をするときは以下の手順で実行する。
+1. gdb (実行ファイル名)で読み込む
+2. set environment LD_PRELOAD=(ライブラリ名)でフック関数を含むライブラリをLD_PRELOADに渡す記述をgdbに教える
+3. runで実行
+
+# フック関数内の変数・関数参照はポインタ経由で行う
+フック関数から直接変数を参照することはexternしてあれば可能であるが、非推奨かつ不安定。
+また、gdbなどで追うことも不可能になる。
+dlsym経由でポインタを取得してから参照する。
+
+# dlsymとは？
+動的リンクされたシンボルを名前で取得する関数。dlfcn.hのインクルードで使用可能。
+dynamic loading symbolの略。
+戻り値はシンボルのアドレス（void*）, 失敗したときはNULL。
+引数はdlsym(void* handle, const char* symbol_name)
+ハンドルはフックを行う場合RTLD_NEXT(RunTime Linker/Loader)を使用する。現在呼び出し元のライブラリより次のライブラリから第二引数の名前のシンボルを探すことを示す。

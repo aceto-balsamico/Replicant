@@ -28,14 +28,14 @@ SRC_CXXFLAGS 		= -O0 -Wall
 # main_bodyディレクトリ用
 MAIN_BODY_CC 		= gcc
 MAIN_BODY_CXX 		= g++
-MAIN_BODY_CFLAGS 	= -Wall -O3 -fPIC
-MAIN_BODY_CXXFLAGS 	= -Wall -O3 -fPIC
+MAIN_BODY_CFLAGS 	= -Wall -O0 -fPIC
+MAIN_BODY_CXXFLAGS 	= -Wall -O0 -fPIC
 
 # userlibディレクトリ用
 USERLIB_CC 			= gcc
 USERLIB_CXX 		= g++
-USERLIB_CFLAGS 		= -Wall -O3 -fPIC
-USERLIB_CXXFLAGS 	= -Wall -O3 -fPIC
+USERLIB_CFLAGS 		= -Wall -O0 -fPIC
+USERLIB_CXXFLAGS 	= -Wall -O0 -fPIC
 
 # リンカフラグ
 LDFLAGS = -lpthread -lm -ldl

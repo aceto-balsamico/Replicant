@@ -14,9 +14,11 @@ int userfunc(int argc, char *argv[])
     // }
     printf("Hello from userfunc! Called with %d arguments.\n", argc);
 
-    printf("%s\n", STR(0xAA)); // → "hello" 
+    printf("%s\n", STR(0xAA));
     printf("hello");
-
-    return EXIT_SUCCESS;  
+    
+    // int* ptr = NULL;
+    // printf("%d\n", *ptr); // This will cause a segmentation fault
+    return EXIT_SUCCESS;
     
 }
