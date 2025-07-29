@@ -6,16 +6,25 @@
 
 int global_var = 42; // Example global variable
 
+
+
+void trigger_start_called() 
+{
+    printf("Start called triggered.\n");    
+}
+
+void printf_hello() 
+{
+    printf("Hello from printf_hello!\n");
+}
+
 int userfunc(int argc, char *argv[])
 {
-    // for(int i = 0; i < argc; i++)
-    // {
-    //     printf("Argument %d: %s\n", i, argv[i]);
-    // }
-    printf("Hello from userfunc! Called with %d arguments.\n", argc);
-
-    printf("%s\n", STR(0xAA));
-    printf("hello");
+    printf_hello();
+    printf_hello();
+    trigger_start_called();
+    printf_hello();
+    printf_hello();
     
     // int* ptr = NULL;
     // printf("%d\n", *ptr); // This will cause a segmentation fault

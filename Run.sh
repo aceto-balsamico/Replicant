@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TARGET_EXE="MainExe"
-FOOK_LIB="libuserlib.so"
+HOOK_LIB="libuserlib.so"
 DIR="bin"
 flag_fook=false
 arguments=()
@@ -17,11 +17,12 @@ done
 
 # プログラムの実行
 if [ "$flag_fook" == true ]; then
-    if [ ! -f "$DIR/$FOOK_LIB" ]; then
-        echo "Fook library not found: $DIR/$FOOK_LIB"
+    if [ ! -f "$DIR/$HOOK_LIB" ]; then
+        echo "Hook library not found: $DIR/$HOOK_LIB"
         exit 1
     fi
-    LD_PRELOAD="$DIR/$FOOK_LIB" "$DIR/$TARGET_EXE" "${arguments[@]}"
+    LD_PRELOAD="$DIR/$HOOK_LIB" "$DIR/$TARGET_EXE" "${arguments[@]}"
+    # echo "$PASS" | sudo -S env LD_PRELOAD="$DIR/$HOOK_LIB" "$DIR/$TARGET_EXE" "${arguments[@]}"
 else
     "$DIR/$TARGET_EXE" "${arguments[@]}"
 fi

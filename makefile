@@ -2,7 +2,7 @@
 # ディレクトリ定義
 SRC_DIR 		= src
 MAIN_BODY_DIR 	= main_body
-USERLIB_DIR 	= FookFunctionFolder
+USERLIB_DIR 	= HookFunctionFolder
 OBJ_DIR 		= obj
 BIN_DIR 		= bin
 SHELL_ARGS 		= 

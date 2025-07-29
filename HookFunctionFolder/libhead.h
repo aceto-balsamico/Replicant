@@ -1,12 +1,13 @@
 #ifndef LIBHEAD_H
 #define LIBHEAD_H
 
+#define _GNU_SOURCE
 #include "userfunc.h"
 #include <dlfcn.h>
-#define _GNU_SOURCE
+
 
 /**
- * @brief 関数をFookしたあと、元の関数を呼び出すマクロ。
+ * @brief 関数をHookしたあと、元の関数を呼び出すマクロ。
  *        以降、元関数は `ptr_` プレフィックスが付けて記述する。
  * @param funcname 関数名
  * @param rettype 戻り値型
@@ -41,6 +42,19 @@
         {                                                                          \
             fprintf(stderr, "original variable %s not found\n", #varname);         \
         }                                                                          \
+    }
+
+#define DEFINE_SKIP_IF_NOT_STARTED(funcname, rettype, errval, prototype, ...) \
+    static rettype (*ptr_##funcname)prototype = NULL;                         \
+    if (!start_called) {                                                      \
+        if (!ptr_##funcname) {                                                \
+            ptr_##funcname = (rettype (*)prototype)dlsym(RTLD_NEXT, #funcname); \
+            if (!ptr_##funcname) {                                            \
+                fprintf(stderr, "[HOOK] %s not found!\n", #funcname);         \
+                return errval;                                                \
+            }                                                                 \
+        }                                                                     \
+        return ptr_##funcname(__VA_ARGS__);                                   \
     }
 
 
