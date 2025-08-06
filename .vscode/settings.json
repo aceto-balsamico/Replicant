@@ -7,7 +7,15 @@
     },
     "terminal.integrated.defaultProfile.linux": "bash (Replicant)",
     "C_Cpp.clang_format_style": "file",
-    "C_Cpp.clang_format_path": "clang-format",
+    // "editor.formatOnSave": true,
+    "C_Cpp.clang_format_path": "/usr/bin/clang-format",     // Linux
+    // "C_Cpp.clang_format_path": "C:/LLVM/bin/clang-format.exe", // Windows
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
     "files.associations": {
         "libhead.h": "c",
         "common.h": "c",
